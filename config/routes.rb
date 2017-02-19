@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :homes
+  resources :a_users
+
+
 
 
   constraints subdomain: 'admin' do

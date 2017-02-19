@@ -24,7 +24,8 @@ class HomesController < ApplicationController
   # POST /homes
   # POST /homes.json
   def create
-    @home = Home.new(home_params)
+    # @home = Home.new(home_params)
+    @home = User.new({email: 'test@example.com', password: 'password', password_confirmation: 'password'})
 
     respond_to do |format|
       if @home.save
