@@ -1,10 +1,17 @@
 class AUsersController < ApplicationController
   before_action :set_a_user, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /a_users
   # GET /a_users.json
   def index
+
+  if current_user.role == "admin"
     @a_users = User.paginate(:page => params[:page], :per_page => 3)
+  elsif current_user.role == "center"
+    @a_users = User.where("role = ?", "student").where("center_name = ?", current_user.center_name).paginate(:page => params[:page], :per_page => 3)
+else
+  end
   end
 
   # GET /a_users/1
@@ -29,7 +36,7 @@ class AUsersController < ApplicationController
     @a_user = User.new(a_user_params)
 
     respond_to do |format|
-      if @a_user.save
+      if @a_user.save(validate: false)
         format.html { redirect_to a_users_path, notice: 'A user was successfully created.' }
         format.json { render :show, status: :created, location: @a_user }
       else
@@ -71,6 +78,6 @@ class AUsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def a_user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :role , :user_id, :center_name, :course_name, :student_name, :dob, :qualification, :state_name, :address, :mobile_number, :center_code, :center_place, :admission_date, :gender, :nationality, :district_name, :pincode)
+      params.require(:user).permit(:email, :password, :password_confirmation, :role , :user_id, :center_name, :course_name, :student_name, :dob, :qualification, :state_name, :address, :mobile_number, :center_code, :center_place, :admission_date, :gender, :nationality, :district_name, :pincode, :active)
     end
 end

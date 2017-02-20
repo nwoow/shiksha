@@ -3,34 +3,83 @@
 <%= simple_form_for @a_user,
     :url => url_for(:action => 'update', :controller => 'a_users'),
     :method => 'put' do |f| %>
-  <%= f.error_notification %>
+    <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :email %>
-    <%= f.input :password %>
-    <%= f.input :password_confirmation %>
-    <%= f.input :role %>
-    <%= f.input :user_id %>
-    <%= f.input :center_name %>
-    <%= f.input :course_name %>
-    <%= f.input :student_name %>
-    <%= f.input :dob %>
-    <%= f.input :qualification %>
-    <%= f.input :state_name %>
-    <%= f.input :address %>
-    <%= f.input :mobile_number %>
-    <%= f.input :center_code %>
-    <%= f.input :center_place %>
-    <%= f.input :admission_date %>
-    <%= f.input :gender %>
-    <%= f.input :nationality %>
-    <%= f.input :district_name %>
-    <%= f.input :district_name %>
+    <div class="form-inputs">
+      <%= f.input :email %>
+
+
+      <% if current_user.role == "center" %>
 
 
 
-  </div>
+      <% elsif current_user.role == "admin" %>
+      <%= f.input :password %>
+      <%= f.input :password_confirmation %>
+      <% end %>
 
+
+
+      <% if current_user.role == "center" %>
+
+      <%= f.input :role, :as => :hidden, :input_html => { :value => "student" } %>
+
+
+      <% elsif current_user.role == "admin" %>
+      <%= f.input :role, :as => :hidden, :input_html => { :value => "center" } %>
+      <% end %>
+
+      <%= f.input :user_id %>
+        <% if current_user.role == "center" %>
+      <%= f.input :center_name , :readonly => true,input_html: {value: current_user.center_name}  %>
+      <% elsif current_user.role == "admin" %>
+      <%= f.input :center_name  %>
+
+      <% end %>
+
+
+      <% if current_user.role == "center" %>
+    <%= f.input :course_name , :readonly => true,input_html: {value: current_user.course_name}  %>
+    <% elsif current_user.role == "admin" %>
+    <%= f.input :course_name  %>
+
+    <% end %>
+
+
+    <% if current_user.role == "center" %>
+  <%= f.input :active , :readonly => true,input_html: {value: current_user.active}  %>
+  <% elsif current_user.role == "admin" %>
+  <%= f.input :active , input_html: {value: "no"}%>
+
+  <% end %>
+      <%= f.input :student_name %>
+      <%= f.input :dob %>
+      <%= f.input :qualification %>
+      <%= f.input :state_name %>
+      <%= f.input :address %>
+      <%= f.input :mobile_number %>
+      <% if current_user.role == "center" %>
+    <%= f.input :center_code , input_html: {value: current_user.center_code}  %>
+    <% elsif current_user.role == "admin" %>
+    <%= f.input :center_code  %>
+
+    <% end %>
+
+    <% if current_user.role == "center" %>
+  <%= f.input :center_place , input_html: {value: current_user.center_place}  %>
+  <% elsif current_user.role == "admin" %>
+  <%= f.input :center_place  %>
+  <% end %>
+      <%= f.input :center_place %>
+      <%= f.input :admission_date %>
+      <%= f.input :gender %>
+      <%= f.input :nationality %>
+      <%= f.input :district_name %>
+      <%= f.input :district_name %>
+
+
+
+    </div>
   <div class="form-actions">
     <%= f.button :submit %>
   </div>

@@ -9,6 +9,8 @@
       <th>Email</th>
       <th>Role</th>
       <th>User Id</th>
+      <th>center_name</th>
+
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,6 +21,8 @@
         <td><%= a_user.email %></td>
         <td><%= a_user.role %></td>
         <td><%= a_user.user_id %></td>
+        <td><%= a_user.center_name %></td>
+
         <td><%= link_to 'Show', a_user_path(a_user) %></td>
         <td><%= link_to 'Edit', edit_a_user_path(a_user) %></td>
         <td><%= link_to 'Destroy', a_users_path, method: :delete, data: { confirm: 'Are you sure?' } %></td>
