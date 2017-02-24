@@ -19,7 +19,14 @@ textarea {
 .center {
   text-align: center;
 }
+.navbar-inverse {
+    background-color: #9261aa;
+    border-color: #9261aa;
+}
 
+.navbar-inverse .navbar-nav > li > a {
+    color: #ffffff;
+}
 .center h1 {
   margin-bottom: 10px;
 }
